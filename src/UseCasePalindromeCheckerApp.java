@@ -1,26 +1,25 @@
-public class UseCasePalindromeCheckerApp {
+public class UseCase13PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        System.out.println("Palindrome Checker App");
-        System.out.println("Version: 11.0");
-        System.out.println("System Initialized Successfully");
+        String input = "level";
 
-        String input = "racecar";
+        long start1 = System.nanoTime();
+        boolean result1 = iterativeCheck(input);
+        long end1 = System.nanoTime();
 
-        PalindromeService service = new PalindromeService();
-
-        boolean isPalindrome = service.checkPalindrome(input);
+        long start2 = System.nanoTime();
+        boolean result2 = recursiveCheck(input, 0, input.length() - 1);
+        long end2 = System.nanoTime();
 
         System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        System.out.println("Iterative Result : " + result1);
+        System.out.println("Iterative Time   : " + (end1 - start1) + " ns");
+        System.out.println("Recursive Result : " + result2);
+        System.out.println("Recursive Time   : " + (end2 - start2) + " ns");
     }
-}
 
-class PalindromeService {
-
-    public boolean checkPalindrome(String input) {
-
+    private static boolean iterativeCheck(String input) {
         int start = 0;
         int end = input.length() - 1;
 
@@ -31,7 +30,16 @@ class PalindromeService {
             start++;
             end--;
         }
-
         return true;
+    }
+
+    private static boolean recursiveCheck(String input, int start, int end) {
+        if (start >= end) {
+            return true;
+        }
+        if (input.charAt(start) != input.charAt(end)) {
+            return false;
+        }
+        return recursiveCheck(input, start + 1, end - 1);
     }
 }

@@ -3,25 +3,35 @@ public class UseCasePalindromeCheckerApp {
     public static void main(String[] args) {
 
         System.out.println("Palindrome Checker App");
-        System.out.println("Version: 10.0");
+        System.out.println("Version: 11.0");
         System.out.println("System Initialized Successfully");
 
-        String input = "A man a plan a canal Panama";
+        String input = "racecar";
 
-        // Normalize: remove spaces & convert to lowercase
-        String normalized = input.replaceAll("[^a-zA-Z]", "").toLowerCase();
+        PalindromeService service = new PalindromeService();
 
-        boolean isPalindrome = true;
-
-        for (int i = 0; i < normalized.length() / 2; i++) {
-            if (normalized.charAt(i) !=
-                    normalized.charAt(normalized.length() - 1 - i)) {
-                isPalindrome = false;
-                break;
-            }
-        }
+        boolean isPalindrome = service.checkPalindrome(input);
 
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + isPalindrome);
+    }
+}
+
+class PalindromeService {
+
+    public boolean checkPalindrome(String input) {
+
+        int start = 0;
+        int end = input.length() - 1;
+
+        while (start < end) {
+            if (input.charAt(start) != input.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+
+        return true;
     }
 }

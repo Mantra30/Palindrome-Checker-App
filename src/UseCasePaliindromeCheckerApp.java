@@ -3,6 +3,10 @@ import java.util.Scanner;
 public class UseCasePaliindromeCheckerApp {
     public static void main(String[] args){
 
+        System.out.println("Palindrome Checker App");
+        System.out.println("Version: 1.0");
+        System.out.println("System Initialized Successfully");
+
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter a string: ");

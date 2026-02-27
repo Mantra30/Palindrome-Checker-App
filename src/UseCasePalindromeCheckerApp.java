@@ -1,37 +1,72 @@
+import java.util.Stack;
+
+/*
+ * Use Case 12: Strategy Pattern for Palindrome Algorithms
+ */
+
 public class UseCasePalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         System.out.println("Palindrome Checker App");
-        System.out.println("Version: 11.0");
+        System.out.println("Version: 12.0");
         System.out.println("System Initialized Successfully");
 
-        String input = "racecar";
+        String input = "level";
 
-        PalindromeService service = new PalindromeService();
+        // Choose Strategy dynamically
+        PalindromeStrategy strategy = new StackStrategy();
 
-        boolean isPalindrome = service.checkPalindrome(input);
+        PalindromeContext context = new PalindromeContext(strategy);
+
+        boolean result = context.checkPalindrome(input);
 
         System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        System.out.println("Is Palindrome? : " + result);
     }
 }
 
-class PalindromeService {
+/* ===============================
+   Strategy Interface
+=================================*/
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-    public boolean checkPalindrome(String input) {
+/* ===============================
+   Stack Strategy Implementation
+=================================*/
+class StackStrategy implements PalindromeStrategy {
 
-        int start = 0;
-        int end = input.length() - 1;
+    public boolean check(String input) {
 
-        while (start < end) {
-            if (input.charAt(start) != input.charAt(end)) {
-                return false;
-            }
-            start++;
-            end--;
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : input.toCharArray()) {
+            stack.push(c);
         }
 
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
+        }
         return true;
+    }
+}
+
+/* ===============================
+   Context Class
+=================================*/
+class PalindromeContext {
+
+    private PalindromeStrategy strategy;
+
+    public PalindromeContext(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public boolean checkPalindrome(String input) {
+        return strategy.check(input);
     }
 }
